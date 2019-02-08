@@ -2,7 +2,10 @@ import React from 'react';
 
 const person = (props) => {
     return (
-        <p>Pirla {props.name} {props.age}</p>
+        <div>
+            <p onClick={props.click}>Pirla {props.name} {props.age}</p>
+            <input onChange={props.change} value={props.name}/>
+        </div>
     )
 
 
