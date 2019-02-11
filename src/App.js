@@ -53,11 +53,13 @@ togglePersonsHandler = () => {
 
   render(){
     const style = {
-      backgroundColor: 'white',
+      color: 'white',
+      backgroundColor: 'green',
       font: 'inherit',
-      border: '1px solid blue',
+      border: '1px solid #eee',
       padding: '8px',
       cursor: 'pointer',
+      marginTop: '20px'
     }
 
     //let's handle dynamic content the JS way
@@ -78,7 +80,7 @@ togglePersonsHandler = () => {
         </div>
       )
 
-
+      style.backgroundColor = 'blue'
       
     }
 
