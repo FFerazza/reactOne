@@ -5,20 +5,32 @@ import './App.css';
 class App extends Component  {
    state = { 
     persons:  [
-      { name: "Adam", age: 250},
-      { name: 'Svend', age: 25},
-      { name: 'Bobby', age: 35}
+      { id:'1', name: "Adam", age: 250},
+      { id:'2', name: 'Svend', age: 25},
+      { id:'3',name: 'Bobby', age: 35}
     ],
     showPersons : false
   }
 
-switchNameHandler = (newName) =>  {
+nameChangedHandler = (event, id) =>  {
+  //here we find the person in the this.state.persons array that has the same id as the id we pass. so we run on this.state.persons a findIndex 
+   const personIndex = this.state.persons.findIndex((pers) => {
+    return pers.id === id;
+   })
+
+
+   //we do the following again to create another obj, as js objects are reference types
+   // we could also use Object.assign() but that's old syntax
+
+   const person = {...this.state.persons[personIndex]}
+   person.name = event.target.value
+  // same for the persons obj
+   const persons = [...this.state.persons];
+   persons[personIndex] = person;
+
+
   this.setState({
-    person: [
-      { name: "Filippo", age: 550},
-      { name: newName, age: 125},
-      { name: 'Bobby', age: 35}
-    ]
+    persons: persons
   })
 };
 
@@ -37,7 +49,6 @@ deletePersonHandler = (personIndex) =>  {
 togglePersonsHandler = () => {
   const doesShow = this.state.showPersons
   this.setState({showPersons : !doesShow})
-
 }
 
   render(){
@@ -57,7 +68,13 @@ togglePersonsHandler = () => {
     if (this.state.showPersons){
       persons = (
         <div>
-          {this.state.persons.map((person,index) => <Person name={person.name} age={person.age} click={(index) => this.deletePersonHandler(index) }/> ) }
+          {this.state.persons.map((person,index) => { 
+          return <Person 
+          key={person.id} 
+          name={person.name} 
+          age={person.age} 
+          click={(index) => this.deletePersonHandler(index) } 
+          changed={(event) => this.nameChangedHandler(event, person.id)}/> }) }
         </div>
       )
 
