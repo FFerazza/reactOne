@@ -48,7 +48,7 @@ togglePersonsHandler = () => {
     }
   return (
     <div className="App">
-      <button style={style} onClick={this.togglePersonsHandler}>Press me!</button>
+      <button style={style} onClick={this.togglePersonsHandler}>Show persons!</button>
       { this.state.showPersons ? 
       <div>
         <Person
