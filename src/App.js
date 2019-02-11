@@ -46,19 +46,32 @@ togglePersonsHandler = () => {
       padding: '8px',
       cursor: 'pointer',
     }
+
+    //let's handle dynamic content the JS way
+    //since render() is called by react on every DOM update (stage or prop changes) we nest a variable inside render fn()
+
+    let persons = null;
+
+    if (this.state.showPersons){
+      persons = (
+        <div>
+          <Person
+          name={ this.state.person[0].name } age={ this.state.person[0].age } click= {this.switchNameHandler.bind(this, 'Nick')}/>
+          <Person 
+          name={ this.state.person[1].name } age={ this.state.person[1].age } change= {this.changeHandler}/>
+          <Person 
+          name={ this.state.person[2].name } age={ this.state.person[2].age } click= { () => this.switchNameHandler('Matt')}/>
+        </div>
+      )
+
+
+      
+    }
+
   return (
     <div className="App">
       <button style={style} onClick={this.togglePersonsHandler}>Show persons!</button>
-      { this.state.showPersons ? 
-      <div>
-        <Person
-        name={ this.state.person[0].name } age={ this.state.person[0].age } click= {this.switchNameHandler.bind(this, 'Nick')}/>
-        <Person 
-        name={ this.state.person[1].name } age={ this.state.person[1].age } change= {this.changeHandler}/>
-        <Person 
-        name={ this.state.person[2].name } age={ this.state.person[2].age } click= { () => this.switchNameHandler('Matt')}/>
-        </div> : null
-      }
+      {persons}
     </div>
   );
   }
