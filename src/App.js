@@ -4,7 +4,7 @@ import './App.css';
 
 class App extends Component  {
    state = { 
-    person:  [
+    persons:  [
       { name: "Adam", age: 250},
       { name: 'Svend', age: 25},
       { name: 'Bobby', age: 35}
@@ -22,14 +22,16 @@ switchNameHandler = (newName) =>  {
   })
 };
 
-changeHandler = (evt) =>  {
-  this.setState({
-    person: [
-      { name: "Filippo", age: 550},
-      { name: evt.target.value, age: 125},
-      { name: 'Bobby', age: 35}
-    ]
-  })
+deletePersonHandler = (personIndex) =>  {
+  // below code is a bad idea, since arrays and objs in js are reference types, here i'm creating a persons which is just a pointer to the this.state.persons
+  // const persons = this.state.persons;
+  // better create a new array like this
+  // const persons = this.state.persons.splice()  - splice argumentless create a new array
+  // or use es6 spread operator to create a new one, like below
+  const persons = [...this.state.persons]
+  persons.splice(personIndex,1);
+  this.setState({persons: persons})
+  console.log(this.state.persons)
 };
 
 togglePersonsHandler = () => {
@@ -55,12 +57,7 @@ togglePersonsHandler = () => {
     if (this.state.showPersons){
       persons = (
         <div>
-          <Person
-          name={ this.state.person[0].name } age={ this.state.person[0].age } click= {this.switchNameHandler.bind(this, 'Nick')}/>
-          <Person 
-          name={ this.state.person[1].name } age={ this.state.person[1].age } change= {this.changeHandler}/>
-          <Person 
-          name={ this.state.person[2].name } age={ this.state.person[2].age } click= { () => this.switchNameHandler('Matt')}/>
+          {this.state.persons.map((person,index) => <Person name={person.name} age={person.age} click={(index) => this.deletePersonHandler(index) }/> ) }
         </div>
       )
 
