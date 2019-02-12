@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Person from './Person/Person'
 import './App.css';
 
+
 class App extends Component  {
    state = { 
     persons:  [
@@ -36,7 +37,7 @@ nameChangedHandler = (event, id) =>  {
 
 deletePersonHandler = (personIndex) =>  {
   // below code is a bad idea, since arrays and objs in js are reference types, here i'm creating a persons which is just a pointer to the this.state.persons
-  // const persons = this.state.persons;
+  // const persons = this.state.persons; <<< that alters the original this state if i change the const persons array in the future
   // better create a new array like this
   // const persons = this.state.persons.splice()  - splice argumentless create a new array
   // or use es6 spread operator to create a new one, like below
